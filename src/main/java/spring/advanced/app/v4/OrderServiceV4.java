@@ -20,6 +20,5 @@ public class OrderServiceV4 {
             }
         };
         template.execute("OrderService.orderItem()");
-
     }
 }
