@@ -1,14 +1,13 @@
 package hello.proxy.app.v2;
 
-public class OrderServiceV2 {
-    private final OrderRepositoryV2 orderRepository;
+import lombok.RequiredArgsConstructor;
 
-    public OrderServiceV2(OrderRepositoryV2 orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+@RequiredArgsConstructor
+public class OrderServiceV2 {
+
+    private final OrderRepositoryV2 orderRepository;
 
     public void orderItem(String itemId) {
         orderRepository.save(itemId);
     }
-
 }
