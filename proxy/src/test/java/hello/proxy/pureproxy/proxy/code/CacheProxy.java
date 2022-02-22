@@ -15,7 +15,8 @@ public class CacheProxy implements Subject {
     @Override
     public String operation() {
         log.info("프록시 호출");
-        if (cacheValue == null) {
+        // 프록시 패턴은 클라이언트 접근 제어를 위한 프록시 패턴 중 하나이다.
+        if(cacheValue == null) {
             cacheValue = target.operation();
         }
         return cacheValue;
