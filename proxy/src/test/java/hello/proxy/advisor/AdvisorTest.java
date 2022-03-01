@@ -11,6 +11,7 @@ import org.springframework.aop.MethodMatcher;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 
 import java.lang.reflect.Method;
 
@@ -45,6 +46,26 @@ public class AdvisorTest {
         proxy.save();
         proxy.find();
     }
+
+    @Test
+    @DisplayName("스프링이 제공하는 포인트 컷")
+    void advisorTest3() {
+        ServiceInterface target = new ServiceImpl();
+        ProxyFactory proxyFactory = new ProxyFactory(target);
+
+        NameMatchMethodPointcut pointCut = new NameMatchMethodPointcut();
+        pointCut.setMappedNames("save");
+
+        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(pointCut, new TimeAdvice()); // 항상 True인 point cut 사용 -> point cut은 클래스와 메소드에 따라 Advice 진행 여부 true/false 반환
+        proxyFactory.addAdvisor(advisor); // 프록시 팩토리는 advisor가 필수다. setAdvice도 내부적으로는 advisor를 추가하는 것임.
+
+        ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
+
+        proxy.save();
+        proxy.find();
+    }
+
+
 
     static class MyPointCut implements Pointcut {
         @Override
